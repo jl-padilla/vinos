@@ -1,0 +1,54 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>API - Predicción de Alcohol en Vino</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .card { border-radius: 1rem; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <span class="navbar-brand">API de Predicción de Vino 🍷</span>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="card shadow p-4">
+    <h1 class="text-center mb-4">Bienvenido a la API de Predicción de Alcohol</h1>
+    <p class="lead">Esta API permite predecir el nivel de alcohol en un vino a partir de sus características químicas y organolépticas.</p>
+
+    <p>El modelo ha sido entrenado con un conjunto de datos de <strong>6.500 vinos</strong> y utiliza técnicas de machine learning para realizar las predicciones.</p>
+    <p><strong>Modelo seleccionado:</strong> XGBoost (XGB)</p>
+    <ul>
+      <li>Error promedio en entrenamiento: <strong> MAPE = 2.58%</strong></li>
+      <li>Error promedio en prueba: <strong>MAPE = 2.44%</strong></li>
+    </ul>
+    <p>Valoramos que es <strong>consistente y preciso</strong>.</p>
+
+    <h3 class="mt-4">🔗 Endpoints disponibles:</h3>
+    <ul>
+      <li>
+        <strong><a href="/api/v1/formulario_predict">/api/v1/formulario_predict</a></strong> – Formulario para predecir el alcohol del vino.<br>
+        Parámetros: <code>[fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlorides, free_sulfur_dioxide, total_sulfur_dioxide, density, pH, sulphates, alcohol (si lo desconoces indícalo con 0), quality, class_]</code>
+      </li>
+      <li>
+        <strong><a href="/api/v1/retrain_page">/api/v1/retrain</a></strong> – Reentrenamiento del modelo con nuevos datos mediante un botón.<br>
+        El modelo busca automáticamente el archivo <code>wines_retrain.csv</code> en la carpeta <code>data/</code>.
+      </li>
+    </ul>
+
+    <p class="mt-4">Si necesitas más información, accede a cada endpoint según corresponda.</p>
+    <p>Para dudas o sugerencias, no dudes en contactar con nosotros 😊</p>
+    <p class="text-center mt-5"><strong>¡Gracias por tu visita! Esperamos que te sea útil.</strong></p>
+  </div>
+</div>
+
+</body>
+</html>

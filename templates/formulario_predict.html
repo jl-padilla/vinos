@@ -1,0 +1,70 @@
+<!-- templates/formulario_predict.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Predicción de Alcohol en Vino</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .card { border-radius: 1rem; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <span class="navbar-brand">Predicción de Vino 🍷</span>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="card shadow p-4">
+    <h2 class="mb-4 text-center">Ingresa las características del vino</h2>
+    <form id="predictionForm">
+      <div class="row g-3">
+        {% for field in fields %}
+        <div class="col-md-4">
+          <label class="form-label">{{ field.label }}:</label>
+          <input name="{{ field.name }}" value="{{ field.default }}" class="form-control" required>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary btn-lg">Predecir</button>
+      </div>
+    </form>
+
+    <div id="resultAlert" class="alert alert-info mt-4 text-center" role="alert" style="display: none;">
+      <strong>Predicción:</strong> <span id="predictionResult">---</span> Grados
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("predictionForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const params = new URLSearchParams();
+    for (const [key, value] of formData.entries()) {
+      params.append(key, value);
+    }
+
+    fetch("/api/v1/predict?" + params.toString())
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("resultAlert").style.display = "block";
+        document.getElementById("predictionResult").innerText = data.prediction;
+      })
+      .catch(error => {
+        document.getElementById("resultAlert").classList.add("alert-danger");
+        document.getElementById("resultAlert").innerText = "Error: " + error;
+      });
+  });
+</script>
+
+</body>
+</html>
+

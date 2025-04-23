@@ -1,0 +1,57 @@
+<!-- templates/retrain.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reentrenamiento del Modelo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .card { border-radius: 1rem; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark mb-4">
+  <div class="container">
+    <span class="navbar-brand">Reentrenar Modelo 🍷</span>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="card shadow p-4">
+    <h2 class="mb-4 text-center">Reentrenamiento del modelo con nuevos datos</h2>
+    <p>Este botón ejecutará el reentrenamiento del modelo usando el archivo <code>wines_retrain.csv</code> ubicado en la carpeta <code>/data</code>. Si el archivo existe, el modelo se actualizará automáticamente.</p>
+
+    <div class="text-center mt-4">
+      <button id="retrainBtn" class="btn btn-success btn-lg">Reentrenar Modelo</button>
+    </div>
+
+    <div id="retrainResult" class="alert mt-4 text-center" role="alert" style="display: none;">
+      <!-- Resultado dinámico -->
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("retrainBtn").addEventListener("click", function() {
+    fetch("/api/v1/retrain/")
+      .then(response => response.text())
+      .then(data => {
+        const resultAlert = document.getElementById("retrainResult");
+        resultAlert.style.display = "block";
+        resultAlert.className = "alert alert-success mt-4 text-center";
+        resultAlert.innerHTML = data;
+      })
+      .catch(error => {
+        const resultAlert = document.getElementById("retrainResult");
+        resultAlert.style.display = "block";
+        resultAlert.className = "alert alert-danger mt-4 text-center";
+        resultAlert.innerText = "Error al reentrenar el modelo: " + error;
+      });
+  });
+</script>
+
+</body>
+</html>
