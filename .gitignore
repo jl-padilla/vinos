@@ -1,4 +1,6 @@
 # Entorno virtual
+mi_entorno39/
+.mi_entorno39/
 venv/
 .env/
 env/
